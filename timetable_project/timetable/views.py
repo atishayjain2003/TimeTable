@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Timetable
-from .serializers import TimetableSerializer
+from .models import Timetable,Student
+from .serializers import TimetableSerializer,StudentSerializer
 
 class TimetableViewSet(viewsets.ModelViewSet):
     queryset = Timetable.objects.all()
@@ -39,3 +39,19 @@ class TimetableViewSet(viewsets.ModelViewSet):
         # Serialize and return the created timetable
         serializer = self.get_serializer(timetable)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()  # Define queryset for list and retrieve actions
+    serializer_class = StudentSerializer  # Use the serializer class for serialization
+    
+    def create(self, request, *args, **kwargs):
+        """
+        Custom create action to handle POST requests.
+        """
+        data = request.data
+        serializer = StudentSerializer(data=data)
+        
+        if serializer.is_valid():
+            student = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

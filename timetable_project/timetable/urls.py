@@ -1,11 +1,8 @@
 from rest_framework.routers import DefaultRouter
-from .views import TimetableViewSet
+from .views import TimetableViewSet,StudentViewSet
 
 router = DefaultRouter()
-# router.register(r'classes', ClassViewSet)
-# router.register(r'subjects', SubjectViewSet)
-# router.register(r'teachers', TeacherViewSet)
-# router.register(r'timeslots', TimeslotViewSet)
 router.register(r'timetables', TimetableViewSet)
+router.register(r'student', StudentViewSet)
 
 urlpatterns = router.urls
