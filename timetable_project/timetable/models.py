@@ -31,7 +31,8 @@ class Timeslot(models.Model):
 
 
 class Timetable(models.Model):
-    class_name = models.CharField(max_length=50)  # e.g., "10th Grade A"
+    class_name = models.CharField(max_length=50)
+    year=models.IntegerField(default=1)  # e.g., "10th Grade A"
     subject = models.CharField(max_length=50)     # e.g., "Mathematics"
     teacher = models.CharField(max_length=50)     # Teacher's name
     timeslot = models.CharField(max_length=50)    # e.g., "09:00 AM - 10:00 AM"

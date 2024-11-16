@@ -10,11 +10,12 @@ class TimetableViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         data = request.data
 
-        # Check if the combination of class_name, timeslot, and day_of_week already exists
+        # Check if the combination of class_name, timeslot,day_of_week and year already exists
         if Timetable.objects.filter(
             class_name=data["class_name"], 
             timeslot=data["timeslot"], 
-            day_of_week=data["day_of_week"]
+            day_of_week=data["day_of_week"],
+            year=data["year"]
         ).exists():
             return Response({"error": "Conflict: This timeslot is already booked for this class."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -29,7 +30,8 @@ class TimetableViewSet(viewsets.ModelViewSet):
                 class_name=data["class_name"],  
                 subject=data["subject"],        
                 teacher=data["teacher"],        
-                timeslot=data["timeslot"]       
+                timeslot=data["timeslot"],
+                year=data["year"]       
             )
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
